@@ -1,11 +1,13 @@
+name: Get latest commit hash
+description: Get hash of the latest commit in specific repo
 inputs:
     url:
+        description: Target repo
         required: true
-        type: string
         default: 'https://github.com/xkinput/KeyTao.git'
     branch:
-        required: true
-        type: string
+        description: Target branch
+        required: false
         default: master
 
 runs:
