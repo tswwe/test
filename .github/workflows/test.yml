@@ -11,4 +11,7 @@ jobs:
         runs-on: ubuntu-latest
         needs: my-caller-job
         steps:
-            - run: echo "${{ needs.my-caller-job.outputs.return }}"
+            - run: |
+                echo "${{ needs.my-caller-job.outputs.return }}"
+                echo $GITHUB_WORKSPACE
+                echo ~
