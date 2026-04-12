@@ -1,0 +1,26 @@
+on:
+    workflow_call:
+        inputs:
+            url:
+                type: string
+                required: true
+                default: 'https://github.com/xkinput/KeyTao.git'
+            branch:
+                type: string
+                default: master
+        outputs:
+            return:
+                value: ${{ jobs.my-job.outputs.return }}
+
+jobs:
+    my-job:
+        runs-on: ubuntu-latest
+        outputs:
+            return:
+                value: ${{ steps.my-step.outputs.LATEST_COMMIT_HASH }}
+        steps:
+            - id: my-step
+              run: |
+                result=$(git ls-remote ${{ inputs.url }} ${{ inputs.branch }})
+                result=${result%%$'\t'*}
+                echo "LATEST_COMMIT_HASH=${result}" >> $GITHUB_OUTPUT
