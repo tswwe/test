@@ -1,0 +1,22 @@
+inputs:
+    url:
+        required: true
+        type: string
+        default: 'https://github.com/xkinput/KeyTao.git'
+    branch:
+        required: true
+        type: string
+        default: master
+
+runs:
+    using: composite
+    steps:
+        - id: my-step
+          run: |
+            result=$(git ls-remote ${{ inputs.url }} ${{ inputs.branch }})
+            echo "return=${result%%$'\t'*}" >> $GITHUB_OUTPUT
+          shell: bash
+
+outputs:
+    return:
+        value: ${{ steps.my-step.outputs.return }}

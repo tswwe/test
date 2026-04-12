@@ -1,16 +1,14 @@
 name: Get the hash of the lastest commit in KeyTao
 on:
-    workflow_dispatch # 用户在 Actions 面板手动触发
+    workflow_dispatch
 jobs:
-    my_job:
+    my-job:
         runs-on: ubuntu-latest
         steps:
-            - id: my-step
-              env: # 在 shell 外创建上下文变量
-                url: https://github.com/xkinput/KeyTao.git
+            - uses: actions/checkout@v6
+            - id: my-caller-step
+              uses: ./.github/actions/get-latest-commit-hash
+              with:
+                url: 'https://github.com/xkinput/KeyTao.git'
                 branch: master
-              run: |
-                result=$(git ls-remote ${{ env.url }} ${{ env.branch }}) # 使用上下文变量
-                result=${result%%$'\t'*}
-                echo LATEST_COMMIT_HASH=${result} >> $GITHUB_OUTPUT # 在 shell 中创建上下文变量
-            - run: echo ${{ steps.my-step.outputs.LATEST_COMMIT_HASH }} # 使用上下文变量
+            - run: echo "${{ steps.my-caller-step.outputs.return }}"
