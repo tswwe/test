@@ -16,9 +16,9 @@ runs:
         - id: my-step
           run: |
             result=$(git ls-remote ${{ inputs.url }} ${{ inputs.branch }})
-            echo "return=${result%%$'\t'*}" >> $GITHUB_OUTPUT
+            echo "hash=${result%%$'\t'*}" >> $GITHUB_OUTPUT
           shell: bash
 
 outputs:
-    return:
-        value: ${{ steps.my-step.outputs.return }}
+    hash:
+        value: ${{ steps.my-step.outputs.hash }}
