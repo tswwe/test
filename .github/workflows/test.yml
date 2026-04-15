@@ -71,7 +71,7 @@ jobs:
               run: |
                     for filepath in "${{ env.filepaths }}"; do
                         if [[ ! -f "${filepath}" ]]; then
-                            echo "Some files are missing. Please check whether the folder structure of KeyTao or xxxk repository has changed."
+                            echo "${filepath} is missing. Please check whether the folder structure of KeyTao or xxxk repository has changed."
                             exit 1
                         fi
                     done
