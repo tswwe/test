@@ -118,7 +118,12 @@ jobs:
                 cat "${output_folder}/keytao.supplement.dict.txt" "${output_folder}/keytao.css.dict.txt" \
                 > "${output_folder}/xkjd6_dict_jm.txt"
 
-            - name: push-to-xxxk
+            - name: configure-git
+              run: |
+                git config --global user.name "github-actions[bot]"
+                git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+            - name: commit-and-push
               working-directory: ${{ github.workspace }}/test
               run: |
                 git branch xkjd6-mb
@@ -127,7 +132,7 @@ jobs:
                 mv "../TempDict/xkjd6_dict_ci.txt" "./home/mb/xkjd6/"
                 mv "../TempDict/xkjd6_dict_jm.txt" "./home/mb/xkjd6/"
                 git add -A
-                git commit -m "[bot]dict: Update xkjd6 dicts with the latest KeyTao dicts."
+                git commit -m "dict: Update xkjd6 dicts with the latest KeyTao dicts."
                 git push origin xkjd6-mb --force
 
             - name: update-cached-hash
