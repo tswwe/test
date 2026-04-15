@@ -60,7 +60,7 @@ jobs:
             - name: check-files-existence
               working-directory: ${{ github.workspace}}
               env:
-                    filepaths: |
+                    filepaths: |-
                         ./KeyTao/rime/keytao.single.dict.yaml
                         ./KeyTao/rime/keytao.supplement.dict.yaml
                         ./KeyTao/rime/keytao.css.dict.yaml
@@ -69,7 +69,7 @@ jobs:
                         ./xxxk/home/mb/xkjd6/xkjd6_dict_ci.txt
                         ./xxxk/home/mb/xkjd6/xkjd6_dict_jm.txt
               run: |
-                    for filepath in ${{ env.filepaths }}; do
+                    for filepath in "${{ env.filepaths }}"; do
                         if [[ ! -f "${filepath}" ]]; then
                             echo "Some files are missing. Please check whether the folder structure of KeyTao or xxxk repository has changed."
                             exit 1
