@@ -58,7 +58,7 @@ jobs:
                     path: test
 
             - name: check-files-existence
-              working-directory: ${GITHUB_WORKSPACE}
+              working-directory: ${{ github.workspace}}
               env:
                     filepaths: |
                         ./KeyTao/rime/keytao.single.dict.yaml
@@ -78,7 +78,7 @@ jobs:
                     echo "All files exist."
 
             - name: keytao-dicts-to-xxxk
-              working-directory: ${GITHUB_WORKSPACE}
+              working-directory: ${{ github.workspace}}
               run: |
                 keytao_folder="./KeyTao/rime"
                 keytao_filenames="keytao.single.dict
@@ -118,7 +118,7 @@ jobs:
                 > "${output_folder}/xkjd6_dict_jm.txt"
 
             - name: push-to-xxxk
-              working-directory: ${GITHUB_WORKSPACE}/test
+              working-directory: ${{ github.workspace }}/test
               run: |
                 git branch xkjd6-mb
                 git switch xkjd6-mb
