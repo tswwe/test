@@ -69,12 +69,13 @@ jobs:
                         ./xxxk/home/mb/xkjd6/xkjd6_dict_ci.txt
                         ./xxxk/home/mb/xkjd6/xkjd6_dict_jm.txt
               run: |
-                    for filepath in "${{ env.filepaths }}"; do
-                        if [[ ! -f "${filepath}" ]]; then
-                            echo "${filepath} is missing. Please check whether the folder structure of KeyTao or xxxk repository has changed."
-                            exit 1
-                        fi
-                    done
+                    while IFS= read -r filepath; do
+                    [[ -z "${filepath}" ]] && continue
+                    if [[ ! -f "${filepath}" ]]; then
+                        echo "Missing: ${filepath}"
+                        exit 1
+                    fi
+                    done <<< "${{ env.filepaths }}"
                     echo "All files exist."
 
             - name: keytao-dicts-to-xxxk
