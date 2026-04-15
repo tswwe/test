@@ -92,7 +92,7 @@ jobs:
                 xkjd6_dict_jm"
                 output_folder="./TempDict"
 
-                mkdir -p "${out_folder}"
+                mkdir -p "${output_folder}"
 
                 for filename in ${keytao_filenames}; do
 
