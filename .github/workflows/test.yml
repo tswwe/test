@@ -31,7 +31,7 @@ jobs:
                     cache-hit: ${{ steps.locate-cached-hash.outputs.cache-hit }}
                     latest-hash: ${{ steps.get-latest-keytao-commit-hash.outputs.result }}
               run: |
-                if [[ ${{ env.cache-hit }} == 'true' ]]; then
+                if [[ "${{ env.cache-hit }}" == "true" ]]; then
                     cached_hash=$(cat ~/.keytao/hash.txt)
                     if [[ $cached_hash == ${{ env.latest-hash }} ]]; then
                         echo "Already up to date."
