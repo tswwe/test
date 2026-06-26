@@ -22,12 +22,12 @@ jobs:
               <title>小小星空最新发布信息</title>
           </head>
           <body>
-              <h1 id="release_tag_name">${{ github.event.release.tag_name }}</h1>
-              <p>【名称】<span id="release_name">${{ github.event.release.name }}</span></p>
-              <p>【预发布版本】<span id="release_prerelease">${{ github.event.release.prerelease }}</span></p>
-              <p>【发布时间】<span id="release_published_at">${{ github.event.release.published_at }}</span></p>
+              <h1 .release_tag_name>${{ github.event.release.tag_name }}</h1>
+              <p>【名称】<span .release_name>${{ github.event.release.name }}</span></p>
+              <p>【预发布版本】<span .release_prerelease>${{ github.event.release.prerelease }}</span></p>
+              <p>【发布时间】<span .release_published_at>${{ github.event.release.published_at }}</span></p>
               <p>【内容说明】</p>
-              <pre id="release_body">${{ github.event.release.body }}</pre>
+              <pre .release_body>${{ github.event.release.body }}</pre>
           </body>
           </html>
           EOF
