@@ -13,6 +13,7 @@ jobs:
 
       - name: Generate release page
         run: |
+          mkdir -p ./upload
           echo "${{ github.event.release }}" > ./upload/xxxk.html
 
       - name: Deploy to Cloudflare Pages
