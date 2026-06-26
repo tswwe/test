@@ -9,18 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Generate release page
         run: |
-          echo "${{ github.event.release.tag_name }}" > xxxk.html
+          echo "${{ github.event.release }}" > ./upload/xxxk.html
 
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_PAGES_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: latest-release # 替换为你的Pages项目名
-          directory: ./ # 或指定包含 index.html 的目录
-          # 可选：指定要部署的分支环境
-          # branch: main
+          command: pages deploy ./upload/ --project-name=latest-release
