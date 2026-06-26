@@ -1,0 +1,26 @@
+name: Update Release Info on Cloudflare Pages
+
+on:
+  release:
+    types: [published, edited]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Generate release page
+        run: |
+          echo "${{ github.event.release.tag_name }}" > xxxk.html
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_PAGES_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: latest-release # 替换为你的Pages项目名
+          directory: ./ # 或指定包含 index.html 的目录
+          # 可选：指定要部署的分支环境
+          # branch: main
