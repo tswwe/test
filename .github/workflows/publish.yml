@@ -14,7 +14,23 @@ jobs:
       - name: Generate release page
         run: |
           mkdir -p ./upload
-          echo "${{ github.event.release }}" > ./upload/xxxk.html
+          cat << EOF > ./upload/xxxk.html
+          <!DOCTYPE html>
+          <html lang="zh-CN">
+          <head>
+              <meta charset="UTF-8">
+              <title>小小星空最新发布信息</title>
+          </head>
+          <body>
+              <h1 id="release_tag_name">${{ github.event.release.tag_name }}</h1>
+              <p>【名称】<span id="release_name">${{ github.event.release.name }}</span></p>
+              <p>【预发布版本】<span id="release_prerelease">${{ github.event.release.prerelease }}</span></p>
+              <p>【发布时间】<span id="release_published_at">${{ github.event.release.published_at }}</span></p>
+              <p>【内容说明】</p>
+              <pre id="release_body">${{ github.event.release.body }}</pre>
+          </body>
+          </html>
+          EOF
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v4
