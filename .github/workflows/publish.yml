@@ -3,6 +3,7 @@ name: Build Releases JSON
 on:
   release:
     types: [published, edited, deleted]
+  workflow_dispatch:
 
 jobs:
   build:
