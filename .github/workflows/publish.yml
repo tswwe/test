@@ -1,40 +1,32 @@
-name: Update Release Info on Cloudflare Pages
+name: Build Releases JSON
 
 on:
   release:
     types: [published, edited]
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v7
 
-      - name: Generate release page
+    steps:
+      - name: Fetch GitHub Releases
         run: |
-          mkdir -p ./upload
-          cat << EOF > ./upload/xxxk.html
-          <!DOCTYPE html>
-          <html lang="zh-CN">
-          <head>
-              <meta charset="UTF-8">
-              <title>小小星空最新发布信息</title>
-          </head>
-          <body>
-              <h1 .release_tag_name>${{ github.event.release.tag_name }}</h1>
-              <p>【名称】<span .release_name>${{ github.event.release.name }}</span></p>
-              <p>【预发布版本】<span .release_prerelease>${{ github.event.release.prerelease }}</span></p>
-              <p>【发布时间】<span .release_published_at>${{ github.event.release.published_at }}</span></p>
-              <p>【内容说明】</p>
-              <pre .release_body>${{ github.event.release.body }}</pre>
-          </body>
-          </html>
-          EOF
+          set -e
+          mkdir -p jsons
+
+          curl -s \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/xkinput/xxxk/releases" \
+            > jsons/xxxk.json
+
+          curl -s \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/xkinput/windikt/releases" \
+            > jsons/windikt.json
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v4
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_PAGES_TOKEN }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy ./upload/ --project-name=latest-release
+          command: pages deploy jsons --project-name=github-releases --branch=main
