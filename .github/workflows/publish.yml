@@ -2,7 +2,7 @@ name: Build Releases JSON
 
 on:
   release:
-    types: [published, edited]
+    types: [published, edited, deleted]
 
 jobs:
   build:
